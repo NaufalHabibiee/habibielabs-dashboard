@@ -6,78 +6,139 @@
   <title>HabibieLabs — Digital Ecosystem</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    :root {
+    :root,
+    :root[data-theme="dark"] {
       --bg: #080808;
       --s1: #0e0e0e;
       --s2: #141414;
-      --border: #1f1f1f;
-      --green: #00c805;
-      --green2: #00a304;
-      --green-soft: rgba(0, 200, 5, 0.08);
-      --green-mid: rgba(0, 200, 5, 0.15);
-      --text: #f2f2f2;
-      --muted: #555;
-      --hint: #222;
+      --border: #161616;
+      --green: #00d563;
+      --green2: #00c25a;
+      --text: #f0f0f0;
+      --muted: #666;
+      --hint: #3a3a3a;
+      /* theme-aware accents */
+      --nav-bg: rgba(8, 8, 8, 0.85);
+      --cta-text: #080808;
+      --eyebrow-border: #173322;
+      --eyebrow-bg: #0a1410;
+      --strip-label: #444;
+      --card-footer-border: #1a1a1a;
+      --card-url-color: #2a2a2a;
+      --card-arrow-bg: #1a1a1a;
+      --foot-left: #2a2a2a;
+      --card-border-hover: #2a2a2a;
+    }
+
+    :root[data-theme="light"] {
+      --bg: #ffffff;
+      --s1: #f7f8f7;
+      --s2: #eef0ee;
+      --border: #e5e7e5;
+      --green: #00a850;
+      --green2: #009647;
+      --text: #0c0c0c;
+      --muted: #6b6b6b;
+      --hint: #9a9a9a;
+      --nav-bg: rgba(255, 255, 255, 0.85);
+      --cta-text: #ffffff;
+      --eyebrow-border: #b8e6cc;
+      --eyebrow-bg: #eafaf1;
+      --strip-label: #9a9a9a;
+      --card-footer-border: #e5e7e5;
+      --card-url-color: #c2c4c2;
+      --card-arrow-bg: #eaecea;
+      --foot-left: #b8bab8;
+      --card-border-hover: #cdd0cd;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: "Plus Jakarta Sans", -apple-system, sans-serif;
+      font-family: "Inter", -apple-system, sans-serif;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
     }
+
+    /* ── VIEWPORT & PAGES ── */
+    .pages-viewport {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pages-wrapper {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 200%;
+    }
+
+    .page {
+      width: 50%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .pages-wrapper.page-1 { transform: translateX(0); }
+    .pages-wrapper.page-2 { transform: translateX(-50%); }
 
     /* ── NAV ── */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      padding: 14px 40px;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
+      padding: 24px 48px;
       border-bottom: 1px solid var(--border);
-      background: rgba(8, 8, 8, 0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
-    .logo {
+    .nav-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
+      cursor: pointer;
       text-decoration: none;
+      color: inherit;
     }
 
-    .logo-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-      background: var(--s1);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+    .nav-name {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
     }
 
-    .logo-text {
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text);
-    }
-
-    .logo-text em {
+    .nav-name em {
       font-style: normal;
       color: var(--green);
+    }
+
+    .nav-center {
+      font-size: 10px;
+      font-family: "JetBrains Mono", monospace;
+      color: var(--hint);
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-self: end;
     }
 
     .nav-status {
@@ -91,218 +152,218 @@
 
     .nav-status::before {
       content: "";
-      width: 6px;
-      height: 6px;
-      background: var(--green);
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
-      animation: blink 2s ease-in-out infinite;
+      background: var(--green);
+      animation: pulse 2s infinite;
     }
 
-    @keyframes blink {
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--s1);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--card-border-hover);
+      color: var(--green);
+    }
+
+    .theme-toggle .icon-moon { display: none; }
+    :root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+    :root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+    @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.3; }
     }
 
-    .nav-url {
-      font-size: 10px;
-      font-family: "JetBrains Mono", monospace;
-      color: var(--muted);
-    }
-
-    /* ── HERO ── */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .hero-left {
-      padding: 56px 40px;
-      border-right: 1px solid var(--border);
+    /* ── PAGE 1: HERO ── */
+    .stage {
+      padding: 88px 48px 80px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex: 1;
     }
 
-    .hero-tag {
-      font-size: 10px;
+    .eyebrow {
+      font-size: 11px;
       font-family: "JetBrains Mono", monospace;
       color: var(--green);
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease 0.1s forwards;
+      margin-bottom: 28px;
+      padding: 6px 14px;
+      border: 1px solid var(--eyebrow-border);
+      border-radius: 999px;
+      background: var(--eyebrow-bg);
     }
 
-    .hero-tag::before {
-      content: "";
-      width: 20px;
-      height: 1px;
-      background: var(--green);
-    }
-
-    .hero-h1 {
-      font-size: 52px;
+    .headline {
+      font-size: 58px;
       font-weight: 800;
-      letter-spacing: -0.05em;
-      line-height: 0.95;
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease 0.2s forwards;
+      letter-spacing: -0.045em;
+      line-height: 1.0;
+      max-width: 700px;
+      margin-bottom: 28px;
     }
 
-    .hero-h1 .green { color: var(--green); }
-    .hero-h1 .white { color: var(--text); }
+    .headline .white { color: var(--text); }
+    .headline .green { color: var(--green); }
 
-    .hero-desc {
-      font-size: 12px;
-      color: var(--muted);
+    .desc {
+      font-size: 14px;
+      color: var(--hint);
       line-height: 1.85;
       font-family: "JetBrains Mono", monospace;
-      max-width: 320px;
-      margin-bottom: 32px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease 0.3s forwards;
+      max-width: 440px;
+      margin-bottom: 44px;
     }
 
-    .btn-row {
-      display: flex;
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
       gap: 10px;
-      align-items: center;
-      opacity: 0;
-      animation: fadeUp 0.6s ease 0.4s forwards;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 11px 22px;
       background: var(--green);
-      color: #080808;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
+      color: var(--cta-text);
       border: none;
-      font-family: "Plus Jakarta Sans", sans-serif;
-      text-decoration: none;
-      transition: background 0.2s ease, transform 0.1s ease;
-    }
-
-    .btn-primary:hover { background: var(--green2); }
-    .btn-primary:active { transform: scale(0.98); }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 11px 22px;
-      background: transparent;
-      color: var(--green);
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 700;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
-      border: 1px solid rgba(0, 200, 5, 0.35);
-      font-family: "Plus Jakarta Sans", sans-serif;
-      text-decoration: none;
-      transition: all 0.2s ease;
+      font-family: "Inter", sans-serif;
+      transition: transform 0.15s ease, background 0.2s ease;
     }
 
-    .btn-outline:hover {
-      background: rgba(0, 200, 5, 0.06);
-      border-color: var(--green);
+    .cta-btn:hover {
+      background: var(--green2);
+      transform: translateY(-2px);
     }
 
-    /* ── HERO RIGHT ── */
-    .hero-right {
-      padding: 32px 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      justify-content: center;
+    .cta-btn svg {
+      transition: transform 0.2s ease;
     }
 
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
+    .cta-btn:hover svg {
+      transform: translateX(3px);
+    }
+
+    .meta-row {
+      margin-top: 18px;
+      font-size: 11px;
+      font-family: "JetBrains Mono", monospace;
+      color: var(--hint);
+    }
+
+    .divider-line {
+      width: 100%;
+      max-width: 880px;
+      height: 1px;
       background: var(--border);
-      border-radius: 12px;
-      overflow: hidden;
+      margin: 64px auto 0;
     }
 
-    .stat-box {
-      background: var(--s1);
-      padding: 20px 22px;
-      opacity: 0;
-      animation: fadeUp 0.5s ease forwards;
+    .strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 880px;
+      margin: 0 auto;
+      width: 100%;
     }
 
-    .stat-box:nth-child(1) { animation-delay: 0.2s; }
-    .stat-box:nth-child(2) { animation-delay: 0.25s; }
-    .stat-box:nth-child(3) { animation-delay: 0.3s; }
-    .stat-box:nth-child(4) { animation-delay: 0.35s; }
-
-    .stat-num {
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1;
+    .strip-item {
+      padding: 28px 20px;
+      text-align: center;
+      border-right: 1px solid var(--border);
     }
 
-    .stat-num.green { color: var(--green); }
-    .stat-num.white { color: var(--text); }
+    .strip-item:last-child { border-right: none; }
 
-    .stat-label {
-      font-size: 9px;
+    .strip-num {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .strip-num.green { color: var(--green); }
+
+    .strip-label {
+      font-size: 10px;
       font-family: "JetBrains Mono", monospace;
-      color: var(--muted);
+      color: var(--strip-label);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 5px;
+      letter-spacing: 0.08em;
     }
 
-    .stack-row {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .stack-chip {
-      padding: 4px 12px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: 9px;
-      font-family: "JetBrains Mono", monospace;
-      color: var(--muted);
+    /* ── PAGE 2: APPS ── */
+    .apps-header {
+      padding: 32px 48px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 5px;
-      transition: border-color 0.2s ease, color 0.2s ease;
+      justify-content: space-between;
     }
 
-    .stack-chip::before {
-      content: "";
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--green);
+    .header-left h2 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
     }
 
-    .stack-chip:hover {
-      border-color: rgba(0, 200, 5, 0.3);
-      color: #888;
+    .header-left p {
+      font-size: 10px;
+      font-family: "JetBrains Mono", monospace;
+      color: var(--hint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
-    /* ── APPS SECTION ── */
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--s1);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 20px;
+      transition: all 0.2s ease;
+      font-family: "Inter", sans-serif;
+    }
+
+    .back-btn:hover {
+      background: var(--s2);
+      border-color: var(--card-border-hover);
+    }
+
     .apps-section {
-      padding: 32px 40px;
+      padding: 32px 48px;
+      flex: 1;
+      overflow-y: auto;
     }
 
     .section-header {
@@ -323,26 +384,26 @@
     .section-count {
       font-size: 10px;
       font-family: "JetBrains Mono", monospace;
-      color: var(--muted);
+      color: var(--hint);
     }
 
     .apps-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
     }
 
     .app-card {
       background: var(--s1);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 18px;
+      padding: 20px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
       color: inherit;
       opacity: 0;
@@ -362,7 +423,7 @@
 
     .app-card:hover {
       background: var(--s2);
-      border-color: #2a2a2a;
+      border-color: var(--card-border-hover);
       transform: translateY(-3px);
     }
 
@@ -391,8 +452,8 @@
       width: 38px;
       height: 38px;
       border-radius: 10px;
-      background: var(--green-soft);
-      border: 1px solid rgba(0, 200, 5, 0.12);
+      background: rgba(0, 213, 99, 0.08);
+      border: 1px solid rgba(0, 213, 99, 0.12);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -405,7 +466,7 @@
       height: 6px;
       border-radius: 50%;
       background: var(--green);
-      animation: blink 2s ease-in-out infinite;
+      animation: pulse 2s ease-in-out infinite;
     }
 
     .card-name {
@@ -428,14 +489,14 @@
       align-items: center;
       justify-content: space-between;
       padding-top: 10px;
-      border-top: 1px solid var(--hint);
+      border-top: 1px solid var(--card-footer-border);
       margin-top: auto;
     }
 
     .card-url {
       font-size: 9px;
       font-family: "JetBrains Mono", monospace;
-      color: #2a2a2a;
+      color: var(--card-url-color);
       transition: color 0.2s ease;
     }
 
@@ -445,7 +506,7 @@
       width: 22px;
       height: 22px;
       border-radius: 6px;
-      background: var(--hint);
+      background: var(--card-arrow-bg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -457,28 +518,24 @@
 
     .app-card:hover .card-arrow {
       background: var(--green);
-      color: #080808;
+      color: var(--cta-text);
     }
 
     /* ── FOOTER ── */
     footer {
-      padding: 16px 40px;
+      padding: 16px 48px;
       border-top: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
     }
 
-    .foot-left {
-      font-size: 10px;
-      color: #222;
-      font-family: "JetBrains Mono", monospace;
-    }
+    .foot-left { color: var(--foot-left); }
 
     .foot-right {
-      font-size: 10px;
       color: var(--green);
-      font-family: "JetBrains Mono", monospace;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -490,7 +547,7 @@
       height: 5px;
       background: var(--green);
       border-radius: 50%;
-      animation: blink 2s ease-in-out infinite;
+      animation: pulse 2s ease-in-out infinite;
     }
 
     /* ── ANIMATIONS ── */
@@ -501,20 +558,21 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      nav { padding: 14px 20px; }
-      .nav-url { display: none; }
-      .hero { grid-template-columns: 1fr; }
-      .hero-left { padding: 40px 20px; border-right: none; border-bottom: 1px solid var(--border); }
-      .hero-right { padding: 24px 20px; }
-      .hero-h1 { font-size: 38px; }
-      .apps-section { padding: 24px 20px; }
+      nav { padding: 20px 24px; grid-template-columns: auto 1fr; }
+      .nav-center { display: none; }
+      .headline { font-size: 38px; }
+      .stage { padding: 60px 24px; }
       .apps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      footer { padding: 14px 20px; }
+      .apps-header { padding: 24px; }
+      .apps-section { padding: 24px; }
+      footer { padding: 14px 24px; }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       .apps-grid { grid-template-columns: 1fr; }
-      .hero-h1 { font-size: 32px; }
+      .headline { font-size: 32px; }
+      .strip { grid-template-columns: repeat(2, 1fr); }
+      .strip-item:nth-child(2) { border-right: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -544,195 +602,226 @@
   <meta name="twitter:title" content="HabibieLabs">
   <meta name="twitter:description" content="Personal lab of self-built tools — stock analysis, finance, productivity & more.">
   <meta name="twitter:image" content="https://habibielabs.com/og-image.png">
+
+  <script>
+    // Apply saved theme before paint to avoid flash
+    (function () {
+      var saved = localStorage.getItem("theme");
+      var theme = saved
+        || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
 </head>
 <body>
 
   <nav>
-    <a href="/" class="logo">
-      <div class="logo-mark">
-        <svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <polygon points="20,4 36,13 36,29 20,38 4,29 4,13" stroke="#00c805" stroke-width="1.8" fill="none"/>
-          <polygon points="20,4 36,13 20,22 4,13" fill="#00c805" opacity="0.18"/>
-          <polygon points="20,22 36,13 36,29 20,38" fill="#00c805" opacity="0.08"/>
-          <polygon points="20,22 4,13 4,29 20,38" fill="#00c805" opacity="0.04"/>
-          <line x1="20" y1="4" x2="20" y2="22" stroke="#00c805" stroke-width="1" opacity="0.5"/>
-          <line x1="4" y1="13" x2="20" y2="22" stroke="#00c805" stroke-width="1" opacity="0.5"/>
-          <line x1="36" y1="13" x2="20" y2="22" stroke="#00c805" stroke-width="1" opacity="0.5"/>
+    <div class="nav-logo" onclick="goToPage(1)">
+      <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
+        <polygon points="20,4 36,13 36,29 20,38 4,29 4,13" stroke="#00d563" stroke-width="1.6" fill="none"/>
+        <polygon points="20,4 36,13 20,22 4,13" fill="#00d563" opacity=".18"/>
+        <polygon points="20,22 36,13 36,29 20,38" fill="#00d563" opacity=".08"/>
+        <line x1="20" y1="4" x2="20" y2="22" stroke="#00d563" stroke-width="1" opacity=".5"/>
+        <line x1="4" y1="13" x2="20" y2="22" stroke="#00d563" stroke-width="1" opacity=".5"/>
+        <line x1="36" y1="13" x2="20" y2="22" stroke="#00d563" stroke-width="1" opacity=".5"/>
+      </svg>
+      <span class="nav-name">Habibie<em>Labs</em></span>
+    </div>
+    <div class="nav-center">PERSONAL LAB</div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark / light mode" aria-label="Toggle dark and light mode">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
         </svg>
-      </div>
-      <span class="logo-text">Habibie<em>Labs</em></span>
-    </a>
-    <div class="nav-status">8 apps online</div>
-    <div class="nav-url">habibielabs.com</div>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <div class="nav-status">online</div>
+    </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-left">
-      <div class="hero-tag">A curated lab of digital tools</div>
-      <h1 class="hero-h1">
-        <div class="white">Where ideas</div>
-        <div class="green">ship as</div>
-        <div class="white">products.</div>
-      </h1>
-      <p class="hero-desc">
-        Kumpulan tools yang dibuat iseng,<br>
-        tapi jadi beneran berguna.<br>
-        Dari analisis saham pakai AI sampai<br>
-        shortener link — semua gratis, semua hidup.
-      </p>
-      <div class="btn-row">
-        <a href="#projects" class="btn-primary">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-          Explore apps
-        </a>
-        <a href="https://github.com/NaufalHabibiee" target="_blank" rel="noopener" class="btn-outline">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
+  <div class="pages-viewport">
+    <div class="pages-wrapper page-1" id="pagesWrapper">
+
+      <!-- PAGE 1: HERO -->
+      <div class="page">
+        <div class="stage">
+          <div class="eyebrow">A curated lab of digital tools</div>
+
+          <h1 class="headline">
+            <div class="white">Where ideas</div>
+            <div class="green">ship as</div>
+            <div class="white">products.</div>
+          </h1>
+
+          <p class="desc">
+            Kumpulan tools yang dibuat iseng,<br>
+            tapi jadi beneran berguna.<br>
+            Dari analisis saham pakai AI sampai<br>
+            shortener link — semua gratis, semua hidup.
+          </p>
+
+          <button class="cta-btn" onclick="goToPage(2)">
+            Explore apps
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+
+          <div class="meta-row">tidak perlu daftar — semua gratis</div>
+
+          <div class="divider-line"></div>
+
+          <div class="strip">
+            <div class="strip-item">
+              <div class="strip-num green">8</div>
+              <div class="strip-label">Apps live</div>
+            </div>
+            <div class="strip-item">
+              <div class="strip-num">∞</div>
+              <div class="strip-label">Free forever</div>
+            </div>
+            <div class="strip-item">
+              <div class="strip-num">24/7</div>
+              <div class="strip-label">Always on</div>
+            </div>
+            <div class="strip-item">
+              <div class="strip-num green">AI</div>
+              <div class="strip-label">Powered</div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="hero-right">
-      <div class="stat-grid">
-        <div class="stat-box">
-          <div class="stat-num green">8</div>
-          <div class="stat-label">Apps live</div>
+
+      <!-- PAGE 2: APPS -->
+      <div class="page">
+        <div class="apps-header">
+          <div class="header-left">
+            <h2>All projects</h2>
+            <p>// deployed apps</p>
+          </div>
+          <div class="header-right">
+            <button class="back-btn" onclick="goToPage(1)" title="Back to home">←</button>
+          </div>
         </div>
-        <div class="stat-box">
-          <div class="stat-num green">∞</div>
-          <div class="stat-label">Free forever</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-num white">24/7</div>
-          <div class="stat-label">Always on</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-num white">AI</div>
-          <div class="stat-label">Powered</div>
+
+        <div class="apps-section">
+          <div class="section-header">
+            <span class="section-label">// apps</span>
+            <span class="section-count">8 deployed</span>
+          </div>
+          <div class="apps-grid">
+
+            <a href="https://stock.habibielabs.com" target="_blank" rel="noopener" class="app-card">
+              <div class="card-top">
+                <div class="card-icon">📊</div>
+                <div class="card-dot"></div>
+              </div>
+              <div class="card-name">Stock Agent</div>
+              <div class="card-desc">AI analysis — confidence score, price target & risk label real-time.</div>
+              <div class="card-footer">
+                <span class="card-url">stock.habibielabs.com</span>
+                <span class="card-arrow">↗</span>
+              </div>
+            </a>
+
+            <a href="https://finance.habibielabs.com" target="_blank" rel="noopener" class="app-card">
+              <div class="card-top">
+                <div class="card-icon">💰</div>
+                <div class="card-dot"></div>
+              </div>
+              <div class="card-name">Finance Tracker</div>
+              <div class="card-desc">Lacak portfolio & transaksi keuangan pribadi.</div>
+              <div class="card-footer">
+                <span class="card-url">finance.habibielabs.com</span>
+                <span class="card-arrow">↗</span>
+              </div>
+            </a>
+
+            <a href="https://weather.habibielabs.com" target="_blank" rel="noopener" class="app-card">
+              <div class="card-top">
+                <div class="card-icon">🌤️</div>
+                <div class="card-dot"></div>
+              </div>
+              <div class="card-name">Weather</div>
+              <div class="card-desc">Cuaca real-time, forecast & alert lokasi.</div>
+              <div class="card-footer">
+                <span class="card-url">weather.habibielabs.com</span>
+                <span class="card-arrow">↗</span>
+              </div>
+            </a>
+
+            <a href="https://go.habibielabs.com" target="_blank" rel="noopener" class="app-card">
+              <div class="card-top">
+                <div class="card-icon">🔗</div>
+                <div class="card-dot"></div>
+              </div>
+              <div class="card-name">Link Shortener</div>
+              <div class="card-desc">Custom slug, QR code & analytics klik.</div>
+              <div class="card-footer">
+                <span class="card-url">go.habibielabs.com</span>
+                <span class="card-arrow">↗</span>
+              </div>
+            </a>
+
+            <a href="https://flowdo.habibielabs.com" target="_blank" rel="noopener" class="app-card">
+              <div class="card-top">
+                <div class="card-icon">📚</div>
+                <div class="card-dot"></div>
+              </div>
+              <div class="card-name">FlowDo</div>
+              <div class="card-desc">Pomodoro timer + task manager terintegrasi.</div>
+              <div class="card-footer">
+                <span class="card-url">flowdo.habibielabs.com</span>
+                <span class="card-arrow">↗</span>
+              </div>
+            </a>
+
+            <a href="https://games.habibielabs.com" target="_blank" rel="noopener" class="app-card">
+              <div class="card-top">
+                <div class="card-icon">🎮</div>
+                <div class="card-dot"></div>
+              </div>
+              <div class="card-name">Games</div>
+              <div class="card-desc">Mini games browser — Snake & more.</div>
+              <div class="card-footer">
+                <span class="card-url">games.habibielabs.com</span>
+                <span class="card-arrow">↗</span>
+              </div>
+            </a>
+
+            <a href="https://lms.habibielabs.com" target="_blank" rel="noopener" class="app-card">
+              <div class="card-top">
+                <div class="card-icon">🏫</div>
+                <div class="card-dot"></div>
+              </div>
+              <div class="card-name">LMS</div>
+              <div class="card-desc">Platform manajemen pembelajaran siswa.</div>
+              <div class="card-footer">
+                <span class="card-url">lms.habibielabs.com</span>
+                <span class="card-arrow">↗</span>
+              </div>
+            </a>
+
+            <a href="https://course.habibielabs.com" target="_blank" rel="noopener" class="app-card">
+              <div class="card-top">
+                <div class="card-icon">🎓</div>
+                <div class="card-dot"></div>
+              </div>
+              <div class="card-name">Online Course</div>
+              <div class="card-desc">Kursus online terstruktur & interaktif.</div>
+              <div class="card-footer">
+                <span class="card-url">course.habibielabs.com</span>
+                <span class="card-arrow">↗</span>
+              </div>
+            </a>
+
+          </div>
         </div>
       </div>
-      <div class="stack-row">
-        <span class="stack-chip">Railway</span>
-        <span class="stack-chip">Vercel</span>
-        <span class="stack-chip">Render</span>
-        <span class="stack-chip">Neon DB</span>
-        <span class="stack-chip">Claude API</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="apps-section" id="projects">
-    <div class="section-header">
-      <span class="section-label">// projects</span>
-      <span class="section-count">8 deployed</span>
-    </div>
-    <div class="apps-grid">
-
-      <a href="https://stock.habibielabs.com" target="_blank" rel="noopener" class="app-card">
-        <div class="card-top">
-          <div class="card-icon">📊</div>
-          <div class="card-dot"></div>
-        </div>
-        <div class="card-name">Stock Agent</div>
-        <div class="card-desc">AI analysis — confidence score, price target & risk label real-time.</div>
-        <div class="card-footer">
-          <span class="card-url">stock.habibielabs.com</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
-
-      <a href="https://finance.habibielabs.com" target="_blank" rel="noopener" class="app-card">
-        <div class="card-top">
-          <div class="card-icon">💰</div>
-          <div class="card-dot"></div>
-        </div>
-        <div class="card-name">Finance Tracker</div>
-        <div class="card-desc">Lacak portfolio & transaksi keuangan pribadi dalam satu tempat.</div>
-        <div class="card-footer">
-          <span class="card-url">finance.habibielabs.com</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
-
-      <a href="https://weather.habibielabs.com" target="_blank" rel="noopener" class="app-card">
-        <div class="card-top">
-          <div class="card-icon">🌤️</div>
-          <div class="card-dot"></div>
-        </div>
-        <div class="card-name">Weather</div>
-        <div class="card-desc">Cuaca real-time, forecast & alert untuk lokasi pilihanmu.</div>
-        <div class="card-footer">
-          <span class="card-url">weather.habibielabs.com</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
-
-      <a href="https://go.habibielabs.com" target="_blank" rel="noopener" class="app-card">
-        <div class="card-top">
-          <div class="card-icon">🔗</div>
-          <div class="card-dot"></div>
-        </div>
-        <div class="card-name">Link Shortener</div>
-        <div class="card-desc">Custom slug, QR code, password protect & analytics klik.</div>
-        <div class="card-footer">
-          <span class="card-url">go.habibielabs.com</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
-
-      <a href="https://flowdo.habibielabs.com" target="_blank" rel="noopener" class="app-card">
-        <div class="card-top">
-          <div class="card-icon">📚</div>
-          <div class="card-dot"></div>
-        </div>
-        <div class="card-name">FlowDo</div>
-        <div class="card-desc">Pomodoro timer + task manager terintegrasi untuk fokus belajar.</div>
-        <div class="card-footer">
-          <span class="card-url">flowdo.habibielabs.com</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
-
-      <a href="https://games.habibielabs.com" target="_blank" rel="noopener" class="app-card">
-        <div class="card-top">
-          <div class="card-icon">🎮</div>
-          <div class="card-dot"></div>
-        </div>
-        <div class="card-name">Games</div>
-        <div class="card-desc">Mini games browser — Snake classic & more coming soon.</div>
-        <div class="card-footer">
-          <span class="card-url">games.habibielabs.com</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
-
-      <a href="https://lms.habibielabs.com" target="_blank" rel="noopener" class="app-card">
-        <div class="card-top">
-          <div class="card-icon">🏫</div>
-          <div class="card-dot"></div>
-        </div>
-        <div class="card-name">LMS</div>
-        <div class="card-desc">Platform manajemen pembelajaran — materi, tugas & progress siswa.</div>
-        <div class="card-footer">
-          <span class="card-url">lms.habibielabs.com</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
-
-      <a href="https://course.habibielabs.com" target="_blank" rel="noopener" class="app-card">
-        <div class="card-top">
-          <div class="card-icon">🎓</div>
-          <div class="card-dot"></div>
-        </div>
-        <div class="card-name">Online Course</div>
-        <div class="card-desc">Kursus online terstruktur & interaktif untuk skill baru.</div>
-        <div class="card-footer">
-          <span class="card-url">course.habibielabs.com</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
 
     </div>
-  </section>
+  </div>
 
   <footer>
     <span class="foot-left">© <span id="year"></span> HabibieLabs — built by Prof X</span>
@@ -740,7 +829,36 @@
   </footer>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    let currentPage = 1;
+
+    function goToPage(page) {
+      currentPage = page;
+      const wrapper = document.getElementById('pagesWrapper');
+
+      if (page === 1) {
+        wrapper.classList.remove('page-2');
+        wrapper.classList.add('page-1');
+      } else if (page === 2) {
+        wrapper.classList.remove('page-1');
+        wrapper.classList.add('page-2');
+      }
+    }
+
+    // Theme toggle (dark / light)
+    function toggleTheme() {
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') goToPage(1);
+      if (e.key === 'ArrowRight') goToPage(2);
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
